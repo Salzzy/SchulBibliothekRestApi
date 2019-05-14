@@ -19,8 +19,8 @@ public class Book {
 	@Column(name="Datenträger")
 	private String datentraeger;
 	
-	@Column(name="Titel")
-	private String titel;
+	@Column(name="titel")
+	private String title;
 	
 	@Column(name="Genre")
 	private String genre;
@@ -41,12 +41,12 @@ public class Book {
 		
 	}
 	
-	public Book(Integer eigentuemer, String datentraeger, String titel, String genre, String isbn, Integer verlagBestellNr, Integer autorId,
+	public Book(Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr, Integer autorId,
 			Integer verlagId) {
 		super();
 		this.eigentuemer = eigentuemer;
 		this.datentraeger = datentraeger;
-		this.titel = titel;
+		this.title = title;
 		this.isbn = isbn;
 		this.verlagBestellNr = verlagBestellNr;
 		this.autorId = autorId;
@@ -54,13 +54,13 @@ public class Book {
 		this.genre = genre;
 	}
 
-	public Book(Integer id, Integer eigentuemer, String datentraeger, String titel, String genre, String isbn, Integer verlagBestellNr,
+	public Book(Integer id, Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr,
 			Integer autorId, Integer verlagId) {
 		super();
 		this.id = id;
 		this.eigentuemer = eigentuemer;
 		this.datentraeger = datentraeger;
-		this.titel = titel;
+		this.title = title;
 		this.isbn = isbn;
 		this.verlagBestellNr = verlagBestellNr;
 		this.autorId = autorId;
@@ -100,12 +100,12 @@ public class Book {
 		this.datentraeger = datentraeger;
 	}
 
-	public String getTitel() {
-		return titel;
+	public String gettitle() {
+		return title;
 	}
 
-	public void setTitel(String titel) {
-		this.titel = titel;
+	public void settitle(String title) {
+		this.title = title;
 	}
 
 	public String getIsbn() {
