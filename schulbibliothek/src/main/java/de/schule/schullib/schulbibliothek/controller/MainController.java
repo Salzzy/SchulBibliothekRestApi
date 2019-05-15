@@ -27,7 +27,7 @@ public class MainController {
 		return bookRepo.findAll();
 	}
 	
-	@GetMapping("/books/{id}")
+	@GetMapping("/book")
 	public Book getBookById(@RequestParam("id")int theId) {
 		
 		Optional<Book> result = bookRepo.findById(theId);

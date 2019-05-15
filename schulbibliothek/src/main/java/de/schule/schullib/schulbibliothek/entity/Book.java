@@ -1,15 +1,25 @@
 package de.schule.schullib.schulbibliothek.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Buch")
 public class Book {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
 	
@@ -36,13 +46,18 @@ public class Book {
 	
 	@Column(name="Verlagid")
 	private Integer verlagId;
+	
+	@JsonManagedReference
+	@OneToOne(cascade= CascadeType.ALL)
+	@JoinColumn(name="Verlagid", referencedColumnName="id", insertable = false, updatable = false)
+	private Verlag verlag;
 
 	public Book() {
 		
 	}
 	
 	public Book(Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr, Integer autorId,
-			Integer verlagId) {
+			Integer verlagId, Verlag verlag) {
 		super();
 		this.eigentuemer = eigentuemer;
 		this.datentraeger = datentraeger;
@@ -55,7 +70,7 @@ public class Book {
 	}
 
 	public Book(Integer id, Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr,
-			Integer autorId, Integer verlagId) {
+			Integer autorId, Integer verlagId, Verlag verlag) {
 		super();
 		this.id = id;
 		this.eigentuemer = eigentuemer;
@@ -66,6 +81,14 @@ public class Book {
 		this.autorId = autorId;
 		this.verlagId = verlagId;
 		this.genre = genre;
+	}
+	
+	public Verlag getVerlag() {
+		return verlag;
+	}
+
+	public void setVerlag(Verlag verlag) {
+		this.verlag = verlag;
 	}
 
 	public Integer getId() {
