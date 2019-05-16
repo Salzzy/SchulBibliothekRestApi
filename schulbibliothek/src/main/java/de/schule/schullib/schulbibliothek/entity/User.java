@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.tomcat.jni.Address;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,7 +35,7 @@ public class User{
 	private String email;
 	
 	@Column(name="Klasse")
-	private String class;
+	private String klasse;
 	
 	@Column(name="Rolle")
 	private Integer role;
@@ -44,33 +46,33 @@ public class User{
 	@Column(name="AdresseID")
 	private Integer fk_addressID;
 	
-	@JsonManagedReference
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
-	private Address address;
+//	@JsonManagedReference
+//	@OneToOne(cascade= CascadeType.ALL)
+//	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
+//	private Address address;
 
 	public User() {
 		
 	}
 	
-	public User(Integer firstName, String lastName, String email, String class, Integer role, String password, Integer fk_addressID) {
+	public User(String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.class = class;
+		this.klasse = klasse;
 		this.role = role;
 		this.password = password;
 		this.fk_addressID = fk_addressID;
 	}
 
-	public User(Integer id, Integer firstName, String lastName, String email, String class, Integer role, String password, Integer fk_addressID) {
+	public User(Integer id, String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.class = class;
+		this.klasse = klasse;
 		this.role = role;
 		this.password = password;
 		this.fk_addressID = fk_addressID;
@@ -97,7 +99,7 @@ public class User{
 	}
 
 	public void setLastName(String lastName){
-		this.lastname = lastName;
+		this.lastName = lastName;
 	}
 
 	public String getEmail(){
@@ -108,12 +110,12 @@ public class User{
 		this.email = email;
 	}
 
-	public String getClass(){
-		return this.class;
+	public String getklasse(){
+		return this.klasse;
 	}
 
-	public void setClass(String class){
-		this.class = class;
+	public void setklasse(String klasse){
+		this.klasse = klasse;
 	}
 
 	public Integer getRole(){
@@ -140,12 +142,12 @@ public class User{
 		this.fk_addressID = addressID;
 	}
 
-	public Address getAddress(){
-		return this.address;
-	}
-
-	public void setAddress(Address address){
-		this.address = address;
-	}
+//	public Address getAddress(){
+//		return this.address;
+//	}
+//
+//	public void setAddress(Address address){
+//		this.address = address;
+//	}
 
 }

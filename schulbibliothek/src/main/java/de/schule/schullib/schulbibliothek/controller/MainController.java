@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.schule.schullib.schulbibliothek.entity.Book;
+import de.schule.schullib.schulbibliothek.entity.User;
 import de.schule.schullib.schulbibliothek.rest.BookRepository;
+import de.schule.schullib.schulbibliothek.rest.UserRepository;
 
 @CrossOrigin
 @RestController
@@ -70,8 +72,19 @@ public class MainController {
 	}
 
 	@GetMapping("/userByName")
-	public List<User> getUserByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
-		return userRepo.findByNameIgnoreCaseContaining(firstName, lastName);
+	public List<User> getUserByName(@RequestParam(name = "lastName", required=false) String lastName, @RequestParam(name = "firstName", required=false) String firstName) {
+		
+		if(firstName == null) {
+			return userRepo.findByLastNameIgnoreCaseContaining(lastName);
+		}
+		if(lastName == null) {
+			return userRepo.findByFirstNameIgnoreCaseContaining(firstName);
+		}
+		
+		
+		
+		return userRepo.findByLastNameIgnoreCaseContainingAndFirstNameIgnoreCaseContaining(lastName, firstName);
 	}
+
 	
 }
