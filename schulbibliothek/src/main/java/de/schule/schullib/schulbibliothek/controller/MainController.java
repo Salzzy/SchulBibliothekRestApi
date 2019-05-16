@@ -50,6 +50,19 @@ public class MainController {
 		
 	}
 	
-	
+	@GetMapping("/user")
+	public User getUserById(@RequestParam("id")int theId) {
+		Optional<User> result = userRepo.findById(theId);
+		
+		User theUser = null;
+		
+		if(result.isPresent()) {
+			theUser = result.get();
+		}
+		else {
+			throw new RuntimeException();
+		}
+		return theUser;
+	}
 	
 }
