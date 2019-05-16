@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,11 @@ import de.schule.schullib.schulbibliothek.rest.BookRepository;
 public class MainController {
 
 	BookRepository bookRepo;
+	UserRepository userRepo;
 	
-	public MainController(BookRepository theBookRepo) {
+	public MainController(BookRepository theBookRepo, UserRepository theUserRepo) {
 		bookRepo = theBookRepo;
+		userRepo = theUserRepo;
 	}
 	
 	@GetMapping("/books")
@@ -64,6 +67,11 @@ public class MainController {
 			throw new RuntimeException();
 		}
 		return theUser;
+	}
+
+	@GetMapping("/userByName")
+	public List<User> getUserByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
+		return userRepo.findByNameIgnoreCaseContaining(firstName, lastName);
 	}
 	
 }
