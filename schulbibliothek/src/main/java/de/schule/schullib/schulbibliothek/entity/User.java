@@ -33,7 +33,7 @@ public class User{
 	private String email;
 	
 	@Column(name="Klasse")
-	private String klasse;
+	private String class;
 	
 	@Column(name="Rolle")
 	private Integer role;
@@ -53,18 +53,18 @@ public class User{
 		
 	}
 	
-	public User(String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
+	public User(Integer firstName, String lastName, String email, String class, Integer role, String password, Integer fk_addressID) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.klasse = klasse;
+		this.class = class;
 		this.role = role;
 		this.password = password;
 		this.fk_addressID = fk_addressID;
 	}
 
-	public User(Integer id, String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
+	public User(Integer id, Integer firstName, String lastName, String email, String class, Integer role, String password, Integer fk_addressID) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
