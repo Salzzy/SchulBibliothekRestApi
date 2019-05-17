@@ -162,9 +162,5 @@ public class Book {
 	public void setVerlagId(Integer verlagId) {
 		this.verlagId = verlagId;
 	}
-	
-	
-	
-	
 
 }
