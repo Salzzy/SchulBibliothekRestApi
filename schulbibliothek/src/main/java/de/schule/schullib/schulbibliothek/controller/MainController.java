@@ -81,10 +81,14 @@ public class MainController {
 			return userRepo.findByFirstNameIgnoreCaseContaining(firstName);
 		}
 		
-		
-		
 		return userRepo.findByLastNameIgnoreCaseContainingAndFirstNameIgnoreCaseContaining(lastName, firstName);
 	}
+	
 
+	@GetMapping("/user/authenticate")
+	public User getUserByAuth(@RequestParam(name="email") String email) {
+		
+		return userRepo.findByEmail(email);
+	}
 	
 }
