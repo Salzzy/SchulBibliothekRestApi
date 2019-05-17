@@ -12,6 +12,12 @@ import de.schule.schullib.schulbibliothek.entity.User;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
-	List<User> findByNameIgnoreCaseContaining(String firstName, String lastName);
+	List<User> findByFirstNameIgnoreCaseContaining(String firstName);
+	
+	List<User> findByLastNameIgnoreCaseContaining(String lastName);
+	
+	List<User> findByLastNameIgnoreCaseContainingAndFirstNameIgnoreCaseContaining(String lastName, String firstName);
+
+	User findByEmail(String email);
 	
 }
