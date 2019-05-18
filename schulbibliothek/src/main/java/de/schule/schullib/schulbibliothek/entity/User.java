@@ -1,11 +1,20 @@
 package de.schule.schullib.schulbibliothek.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Benutzer")
@@ -33,40 +42,48 @@ public class User{
 	
 	@Column(name="Password")
 	private String password;
-
-	@Column(name="AdresseID")
-	private Integer fk_addressID;
 	
-//	@JsonManagedReference
-//	@OneToOne(cascade= CascadeType.ALL)
-//	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
-//	private Address address;
-
+	@JsonManagedReference
+	@OneToOne(cascade= CascadeType.ALL)
+	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
+	private Address address;
+	
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name="verantwortlicherID", referencedColumnName = "BenutzerID", insertable = false, updatable = false)
+	private List<LentBooks> lentBooks;
+	
+	
 	public User() {
 		
 	}
 	
-	public User(String firstName, String lastName, String email, String klasse, Integer role, String password) {
-		super();
+	/*
+	 * Konstruktor ohne id, da durch AUTO_INCREMENT in der Datenbank
+	 * 	die id's schon gesetzt werden
+	 * 
+	 */
+	public User(String firstName, String lastName, String email, String klasse, Integer role, String password,
+			Address address, List<LentBooks> lentBooks) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.klasse = klasse;
 		this.role = role;
 		this.password = password;
-//		this.fk_addressID = fk_addressID;
+		this.address = address;
+		this.lentBooks = lentBooks;
 	}
 
-	public User(Integer id, String firstName, String lastName, String email, String klasse, Integer role, String password) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.klasse = klasse;
-		this.role = role;
-		this.password = password;
-//		this.fk_addressID = fk_addressID;
+	
+
+
+	public List<LentBooks> getLentBooks() {
+		return lentBooks;
+	}
+
+	public void setLentBooks(List<LentBooks> lentBooks) {
+		this.lentBooks = lentBooks;
 	}
 
 	public Integer getId(){
@@ -105,7 +122,7 @@ public class User{
 		return this.klasse;
 	}
 
-	public void setClass(String klasse){
+	public void setKlass(String klasse){
 		this.klasse = klasse;
 	}
 
@@ -125,20 +142,12 @@ public class User{
 		this.password = password;
 	}
 
-	public Integer getAddressId(){
-		return this.fk_addressID;
+	public Address getAddress(){
+		return this.address;
 	}
 
-	public void setAddressId(Integer addressID){
-		this.fk_addressID = addressID;
+	public void setAddress(Address address){
+		this.address = address;
 	}
-
-//	public Address getAddress(){
-//		return this.address;
-//	}
-//
-//	public void setAddress(Address address){
-//		this.address = address;
-//	}
 
 }

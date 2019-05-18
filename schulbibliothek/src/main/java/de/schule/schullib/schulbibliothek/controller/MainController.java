@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -72,7 +74,35 @@ public class MainController {
 
 	@GetMapping("/userByName")
 	public List<User> getUserByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
+		
+		if(firstName != null && lastName == null) {
+			return userRepo.findByFirstNameIgnoreCaseContaining(firstName);
+		}
+		
+		if(firstName == null && lastName != null) {
+			return userRepo.findByLastNameIgnoreCaseContaining(lastName);
+		}
+		
 		return userRepo.findByLastNameIgnoreCaseContainingAndFirstNameIgnoreCaseContaining(lastName, firstName);
 	}
+	
+	@RequestMapping(value="/checkuser",  method=RequestMethod.POST)
+	public boolean checkUserPwAndMail(@RequestParam(name="email") String email, @RequestParam(name="password") String password) {
+		
+		boolean correct = false;
+		User tempUser = userRepo.checkIfUserExists(email, password);
+		
+		if(tempUser != null) {
+			correct = true;
+		}
+
+		return correct;
+	}
+	
+	@PostMapping("/user/register")
+	public void saveNewUser() {
+		
+	}
+	
 	
 }
