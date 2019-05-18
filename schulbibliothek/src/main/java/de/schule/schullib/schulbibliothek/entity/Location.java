@@ -3,7 +3,6 @@ package de.schule.schullib.schulbibliothek.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -39,9 +37,13 @@ public class Location {
     private Integer fk_verantwortlicherID;
 
     @JsonManagedReference
-	@ManyToOne(cascade= CascadeType.ALL)
+	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name="verantwortlicherID", referencedColumnName="BenutzerID", insertable = false, updatable = false)
 	private User user;
+	
+	public Location() {
+		
+	}
 
     public Location(Integer id, String fach, Integer regalnr, String fachbereich, String raumnr, Integer fk_verantwortlicherID) {
         this.id = id;
@@ -53,7 +55,6 @@ public class Location {
     }
 
     public Location(String fach, Integer regalnr, String fachbereich, String raumnr, Integer fk_verantwortlicherID) {
-        this.id = id;
         this.fach = fach;
         this.regalnr = regalnr;
         this.fachbereich = fachbereich;

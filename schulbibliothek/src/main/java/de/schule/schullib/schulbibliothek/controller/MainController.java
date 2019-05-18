@@ -5,13 +5,14 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.schule.schullib.schulbibliothek.entity.Book;
+import de.schule.schullib.schulbibliothek.entity.User;
 import de.schule.schullib.schulbibliothek.rest.BookRepository;
+import de.schule.schullib.schulbibliothek.rest.UserRepository;
 
 @CrossOrigin
 @RestController
@@ -71,7 +72,7 @@ public class MainController {
 
 	@GetMapping("/userByName")
 	public List<User> getUserByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
-		return userRepo.findByNameIgnoreCaseContaining(firstName, lastName);
+		return userRepo.findByLastNameIgnoreCaseContainingAndFirstNameIgnoreCaseContaining(lastName, firstName);
 	}
 	
 }

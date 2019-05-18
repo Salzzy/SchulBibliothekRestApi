@@ -1,18 +1,11 @@
 package de.schule.schullib.schulbibliothek.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Benutzer")
@@ -44,16 +37,16 @@ public class User{
 	@Column(name="AdresseID")
 	private Integer fk_addressID;
 	
-	@JsonManagedReference
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
-	private Address address;
+//	@JsonManagedReference
+//	@OneToOne(cascade= CascadeType.ALL)
+//	@JoinColumn(name="AdresseID", referencedColumnName="AdresseID", insertable = false, updatable = false)
+//	private Address address;
 
 	public User() {
 		
 	}
 	
-	public User(String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
+	public User(String firstName, String lastName, String email, String klasse, Integer role, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -61,19 +54,19 @@ public class User{
 		this.klasse = klasse;
 		this.role = role;
 		this.password = password;
-		this.fk_addressID = fk_addressID;
+//		this.fk_addressID = fk_addressID;
 	}
 
-	public User(Integer id, String firstName, String lastName, String email, String klasse, Integer role, String password, Integer fk_addressID) {
+	public User(Integer id, String firstName, String lastName, String email, String klasse, Integer role, String password) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.class = class;
+		this.klasse = klasse;
 		this.role = role;
 		this.password = password;
-		this.fk_addressID = fk_addressID;
+//		this.fk_addressID = fk_addressID;
 	}
 
 	public Integer getId(){
@@ -97,7 +90,7 @@ public class User{
 	}
 
 	public void setLastName(String lastName){
-		this.lastname = lastName;
+		this.lastName = lastName;
 	}
 
 	public String getEmail(){
@@ -108,12 +101,12 @@ public class User{
 		this.email = email;
 	}
 
-	public String getClass(){
-		return this.class;
+	public String getKlasse(){
+		return this.klasse;
 	}
 
-	public void setClass(String class){
-		this.class = class;
+	public void setClass(String klasse){
+		this.klasse = klasse;
 	}
 
 	public Integer getRole(){
@@ -140,12 +133,12 @@ public class User{
 		this.fk_addressID = addressID;
 	}
 
-	public Address getAddress(){
-		return this.address;
-	}
-
-	public void setAddress(Address address){
-		this.address = address;
-	}
+//	public Address getAddress(){
+//		return this.address;
+//	}
+//
+//	public void setAddress(Address address){
+//		this.address = address;
+//	}
 
 }

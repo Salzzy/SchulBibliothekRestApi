@@ -1,5 +1,7 @@
 package de.schule.schullib.schulbibliothek.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -51,13 +53,18 @@ public class Book {
 	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name="Verlagid", referencedColumnName="id", insertable = false, updatable = false)
 	private Verlag verlag;
+	
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name="Buch_id", referencedColumnName = "id", insertable = false, updatable = false)
+	List<BookCopy> bookCopy;
 
 	public Book() {
 		
 	}
 	
 	public Book(Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr, Integer autorId,
-			Integer verlagId, Verlag verlag) {
+			Integer verlagId, Verlag verlag, List<BookCopy> bookCopy) {
 		super();
 		this.eigentuemer = eigentuemer;
 		this.datentraeger = datentraeger;
@@ -67,10 +74,11 @@ public class Book {
 		this.autorId = autorId;
 		this.verlagId = verlagId;
 		this.genre = genre;
+		this.bookCopy = bookCopy;
 	}
 
 	public Book(Integer id, Integer eigentuemer, String datentraeger, String title, String genre, String isbn, Integer verlagBestellNr,
-			Integer autorId, Integer verlagId, Verlag verlag) {
+			Integer autorId, Integer verlagId, Verlag verlag, List<BookCopy> bookCopy) {
 		super();
 		this.id = id;
 		this.eigentuemer = eigentuemer;
@@ -81,8 +89,17 @@ public class Book {
 		this.autorId = autorId;
 		this.verlagId = verlagId;
 		this.genre = genre;
+		this.bookCopy = bookCopy;
 	}
 	
+	public List<BookCopy> getBookCopy() {
+		return bookCopy;
+	}
+
+	public void setBookCopy(List<BookCopy> bookCopy) {
+		this.bookCopy = bookCopy;
+	}
+
 	public Verlag getVerlag() {
 		return verlag;
 	}

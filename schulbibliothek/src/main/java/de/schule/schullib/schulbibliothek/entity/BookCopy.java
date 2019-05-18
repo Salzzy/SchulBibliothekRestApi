@@ -3,7 +3,6 @@ package de.schule.schullib.schulbibliothek.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -20,44 +18,47 @@ public class BookCopy {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private Integer id;
+    @Column(name="id")
+    private Integer id;
+	
+	@Column(name="Buch_id")
+	private Integer bookId;
 	
 	@Column(name="Auflage")
     private Integer edition;
-    
-    @Column(name="Buch_id")
-    private Integer fk_bookID;
 
     @Column(name="Standort_id")
     private Integer fk_locationID;
-
+    
     @JsonManagedReference
-	@ManyToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="Buch_id", referencedColumnName="id", insertable = false, updatable = false)
-	private Book book;
-
-	@JsonManagedReference
-	@ManyToOne(cascade= CascadeType.ALL)
+	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name="Standort_id", referencedColumnName="id", insertable = false, updatable = false)
-	private Location location;
+    private Location location;
 
-
-	public BookCopy(Integer id, Integer edition, Integer fk_bookID, Integer fk_locationID, Book book, Location location) {
+    public BookCopy() {
+    	
+    }
+    
+	public BookCopy(Integer id, Integer edition, Integer bookId, Integer fk_locationID, Location location) {
 		this.id = id;
 		this.edition = edition;
-		this.fk_bookID = fk_bookID;
+		this.bookId = bookId;
 		this.fk_locationID = fk_locationID;
-		this.book = book;
 		this.location = location;
 	}
 
-	public BookCopy(Integer edition, Integer fk_bookID, Integer fk_locationID, Book book, Location location) {
-		this.id = id;
+	public BookCopy(Integer edition, Integer bookId, Integer fk_locationID, Location location) {
 		this.edition = edition;
-		this.fk_bookID = fk_bookID;
+		this.bookId = bookId;
 		this.fk_locationID = fk_locationID;
-		this.book = book;
+		this.location = location;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -77,12 +78,12 @@ public class BookCopy {
 		this.edition = edition;
 	}
 
-	public Integer getFk_bookID() {
-		return this.fk_bookID;
+	public Integer getbookId() {
+		return this.bookId;
 	}
 
-	public void setFk_bookID(Integer fk_bookID) {
-		this.fk_bookID = fk_bookID;
+	public void setbookId(Integer bookId) {
+		this.bookId = bookId;
 	}
 
 	public Integer getFk_locationID() {
@@ -93,20 +94,6 @@ public class BookCopy {
 		this.fk_locationID = fk_locationID;
 	}
 
-	public Book getBook() {
-		return this.book;
-	}
 
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
-	public Location getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
 	
 }
